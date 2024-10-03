@@ -24,8 +24,29 @@ icone_path = relative_to_assets("icone.png")  # Coloque o caminho do arquivo de 
 window.iconphoto(False, PhotoImage(file=icone_path))  # Define o ícone da janela
 window.title("Máquina de Vendas")  # Define o nome da janela
 
+
+largura_janela = 545
+altura_janela = 768
 window.geometry("545x768")
+# Função para centralizar a janela
+def centralizar_janela():
+    tela_largura = window.winfo_screenwidth()
+    tela_altura = window.winfo_screenheight()
+    x = (tela_largura // 2) - (largura_janela // 2)
+    y = (tela_altura // 2) - (altura_janela // 2)
+    window.geometry(f"{largura_janela}x{altura_janela}+{x}+{y}")
+
+centralizar_janela()
 window.configure(bg = "#FFFFFF")
+
+
+# Função para centralizar os pop-up
+def centralizar_popup(popup, largura, altura):
+    tela_largura = popup.winfo_screenwidth()
+    tela_altura = popup.winfo_screenheight()
+    x = (tela_largura // 2) - (largura // 2)
+    y = (tela_altura // 2) - (altura // 2)
+    popup.geometry(f"{largura}x{altura}+{x}+{y}")
 
 # Função para exibir as regras da máquina em um popup
 def exibir_regras():
@@ -43,6 +64,7 @@ def exibir_regras():
 
     Label(popup, text=regras_texto, font=("Arial", 16), justify="left").pack(pady=20)
     Button(popup, text="OK", command=popup.destroy).pack(pady=10)
+    centralizar_popup(popup, 600, 250)  # Centraliza o pop-up
 
 valor_inicial = 0
 
@@ -87,6 +109,7 @@ def exibir_popup_erro(valor_inserido):
 
     Label(popup, text=mensagem, font=("Arial", 10), justify="left", wraplength=350).pack(pady=20)
     Button(popup, text="OK", command=popup.destroy).pack(pady=10)
+    centralizar_popup(popup, largura_popup, altura_popup)  # Centraliza o pop-up
 
 # Função para validar a entrada de dados (apenas números e um ponto)
 def validar_entrada(texto):
@@ -105,11 +128,14 @@ def exibir_popup(valor_devolvido):
     Label(popup, text=f"Você inseriu valor a mais. Valor devolvido: R${valor_devolvido:.2f}", font=("Arial", 10)).pack(pady=20)
     Button(popup, text="OK", command=popup.destroy).pack(pady=10)
 
+    centralizar_popup(popup, 300, 100)  # Centraliza o pop-up!!
+
 # Função para exibir o popup com mensagem e imagem
 def exibir_popup_bebida(imagem=None):
     popup = Toplevel(window)
     popup.geometry("300x200")
     popup.title("Sua Bebida")
+    centralizar_popup(popup, 300, 200)  # Centraliza o pop-up
 
     if imagem:
         img = PhotoImage(file=relative_to_assets(imagem))
