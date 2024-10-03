@@ -51,8 +51,11 @@ def centralizar_popup(popup, largura, altura):
 # Função para exibir as regras da máquina em um popup
 def exibir_regras():
     popup = Toplevel(window)
-    popup.geometry("1000x250")
+    popup.geometry("") # Deixa que o proprio tkinter escolha o tamanho
+    popup.minsize(600, 250) # Tamanho mínimo
     popup.title("Regras da Máquina")
+    popup.grab_set() # Não deixa o usuário interagir com a tela principal quando o pop-up estiver aberto
+    popup.resizable(False, False) # Não deixa o usuário mexer no tamanho da tela
 
     regras_texto = (
         "1- São apenas aceitas moedas de R$0.25, R$0.50 e R$1.00\n"
@@ -64,7 +67,10 @@ def exibir_regras():
 
     Label(popup, text=regras_texto, font=("Arial", 16), justify="left").pack(pady=20)
     Button(popup, text="OK", command=popup.destroy).pack(pady=10)
-    centralizar_popup(popup, 600, 250)  # Centraliza o pop-up
+    popup.update_idletasks()  # Atualiza o layout para obter o tamanho correto, pra q fique proporcional ao tamanho da fonte
+    largura_popup = popup.winfo_width() 
+    altura_popup = popup.winfo_height()
+    centralizar_popup(popup, largura_popup, altura_popup)  # Centraliza o pop-up
 
 valor_inicial = 0
 
@@ -95,6 +101,8 @@ def inserir():
 def exibir_popup_erro(valor_inserido):
     popup = Toplevel(window)
     popup.title("Valor Inválido")
+    popup.grab_set() # Não deixa o usuário interagir com a tela principal quando o pop-up estiver aberto
+    popup.resizable(False, False) # Não deixa o usuário mexer no tamanho da tela
 
     mensagem = (
         f"Você inseriu um valor diferente, por favor, insira apenas moedas de R$0.25, R$0.50 e R$1.00.\n"
@@ -124,6 +132,8 @@ def exibir_popup(valor_devolvido):
     popup = Toplevel(window)
     popup.geometry("300x100")
     popup.title("Valor Devolvido")
+    popup.grab_set() # Não deixa o usuário interagir com a tela principal quando o pop-up estiver aberto
+    popup.resizable(False, False) # Não deixa o usuário mexer no tamanho da tela
 
     Label(popup, text=f"Você inseriu valor a mais. Valor devolvido: R${valor_devolvido:.2f}", font=("Arial", 10)).pack(pady=20)
     Button(popup, text="OK", command=popup.destroy).pack(pady=10)
@@ -135,6 +145,9 @@ def exibir_popup_bebida(imagem=None):
     popup = Toplevel(window)
     popup.geometry("300x200")
     popup.title("Sua Bebida")
+    popup.grab_set() # Não deixa o usuário interagir com a tela principal quando o pop-up estiver aberto
+    popup.resizable(False, False) # Não deixa o usuário mexer no tamanho da tela
+
     centralizar_popup(popup, 300, 200)  # Centraliza o pop-up
 
     if imagem:
